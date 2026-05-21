@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
-  ArrowRight, CheckCircle2, ChevronDown, Clock, Github, Linkedin,
-  Loader2, Mail, MapPin, Phone, Sparkles, Twitter,
+  ArrowRight, CheckCircle2, ChevronDown, Clock,
+  Loader2, Mail, MapPin, Phone, Sparkles,
 } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
@@ -40,10 +40,22 @@ const faqs = [
   { q: "What does Aether Intelligence actually do?", a: "It forecasts enrollment, predicts retention risk, automates scheduling, and powers a conversational copilot for everyone on campus." },
 ];
 
-const socials = [
-  { icon: Github, label: "GitHub", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Twitter, label: "Twitter / X", href: "#" },
+const socials: { label: string; href: string; path: string }[] = [
+  {
+    label: "GitHub",
+    href: "#",
+    path: "M12 .5C5.73.5.5 5.74.5 12.02c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12.02C23.5 5.74 18.27.5 12 .5Z",
+  },
+  {
+    label: "LinkedIn",
+    href: "#",
+    path: "M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z",
+  },
+  {
+    label: "Twitter / X",
+    href: "#",
+    path: "M18.244 2H21.5l-7.5 8.57L23 22h-6.75l-5.28-6.42L4.92 22H1.66l8.02-9.16L1 2h6.91l4.77 5.86L18.24 2Zm-1.18 18h1.87L7.04 4H5.05l12.01 16Z",
+  },
 ];
 
 function ContactPage() {
@@ -132,7 +144,9 @@ function ContactGrid() {
                   aria-label={s.label}
                   className="group h-10 w-10 rounded-xl glass flex items-center justify-center hover:bg-white/[0.08] hover:shadow-glow transition-all"
                 >
-                  <s.icon className="h-4 w-4 text-foreground" strokeWidth={1.75} />
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 fill-foreground/90 group-hover:fill-cyan transition-colors">
+                    <path d={s.path} />
+                  </svg>
                 </a>
               ))}
             </div>
