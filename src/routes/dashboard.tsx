@@ -1,10 +1,17 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
-  Activity, ArrowUpRight, Bell, BookOpen, Brain, Calendar, ChartBar,
+  Activity, ArrowUpRight, BookOpen, Brain, Calendar, ChartBar,
   Command, GraduationCap, Home, MessageSquare, Search, Settings,
-  Sparkles, Users, Zap,
+  Sparkles, Users, Zap, LogOut,
 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
+import { useAuth } from "@/lib/auth/store";
+import { useDashboard } from "@/lib/dashboard/store";
+import { NotificationsButton } from "@/components/dashboard/NotificationsButton";
+import { TasksWidget } from "@/components/dashboard/TasksWidget";
+import { AIAssistantPanel } from "@/components/dashboard/AIAssistantPanel";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -39,6 +46,52 @@ const series = [42, 55, 48, 70, 62, 78, 71, 85, 79, 92, 88, 95];
 const heat = Array.from({ length: 7 * 16 }, (_, i) => Math.floor(Math.random() * 100));
 
 function Dashboard() {
+  const navigate = useNavigate();
+  const user = useAuth((s) => s.user);
+  const logout = useAuth((s) => s.logout);
+  const [aiOpen, setAiOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const pushNotification = useDashboard((s) => s.pushNotification);
+
+  const initials = useMemo(() => {
+    const name = user?.name ?? "Helena Voss";
+    return name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
+  }, [user?.name]);
+
+  // Cmd+K opens search
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+      if (e.key === "Escape") setSearchOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Simulate occasional realtime signals
+  useEffect(() => {
+    const id = setInterval(() => {
+      const pool = [
+        { title: "New AI insight", body: "Mentor pairing optimised for incoming cohort.", category: "ai" as const },
+        { title: "Faculty update", body: "ECON dept submitted Q2 capacity plan.", category: "academic" as const },
+        { title: "Engagement spike", body: "Library dashboard up 23% this hour.", category: "system" as const },
+      ];
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      pushNotification(pick);
+    }, 45_000);
+    return () => clearInterval(id);
+  }, [pushNotification]);
+
+  async function handleLogout() {
+    await logout();
+    toast.success("Signed out.");
+    navigate({ to: "/" });
+  }
+
   return (
     <div className="min-h-screen flex bg-background">
       {/* Sidebar */}
@@ -80,13 +133,15 @@ function Dashboard() {
         <div className="mt-auto rounded-2xl glass p-4">
           <div className="flex items-center gap-2.5 mb-3">
             <div className="h-8 w-8 rounded-full bg-aurora flex items-center justify-center text-xs font-semibold text-background">
-              HV
+              {initials}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-xs font-semibold text-foreground truncate">Helena Voss</div>
-              <div className="text-[10px] text-muted-foreground">Provost</div>
+              <div className="text-xs font-semibold text-foreground truncate">{user?.name ?? "Helena Voss"}</div>
+              <div className="text-[10px] text-muted-foreground capitalize">{user?.role ?? "Provost"}</div>
             </div>
-            <Settings className="h-3.5 w-3.5 text-muted-foreground" />
+            <button onClick={handleLogout} aria-label="Sign out" className="text-muted-foreground hover:text-foreground transition-colors">
+              <LogOut className="h-3.5 w-3.5" />
+            </button>
           </div>
         </div>
       </aside>
@@ -98,18 +153,24 @@ function Dashboard() {
           <div className="px-6 lg:px-10 h-16 flex items-center justify-between">
             <div>
               <div className="text-xs text-muted-foreground">Tuesday, March 18</div>
-              <div className="text-sm font-semibold text-foreground tracking-tight">Good morning, Helena</div>
+              <div className="text-sm font-semibold text-foreground tracking-tight">
+                Good morning, {(user?.name ?? "Helena").split(" ")[0]}
+              </div>
             </div>
             <div className="flex items-center gap-2">
-              <button className="glass rounded-lg px-3 py-2 text-xs text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors">
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="glass rounded-lg px-3 py-2 text-xs text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
+              >
                 <Command className="h-3.5 w-3.5" /> Quick actions
+                <kbd className="hidden md:inline text-[10px] px-1.5 py-0.5 rounded bg-white/[0.06] border border-white/[0.06]">⌘K</kbd>
               </button>
-              <button className="relative glass rounded-lg p-2 hover:bg-white/[0.06] transition-colors">
-                <Bell className="h-4 w-4 text-foreground" />
-                <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-cyan animate-pulse-glow" />
-              </button>
-              <button className="bg-foreground text-background rounded-lg px-3 py-2 text-xs font-medium flex items-center gap-1.5 hover:opacity-90">
-                <Zap className="h-3.5 w-3.5" /> Invite team
+              <NotificationsButton />
+              <button
+                onClick={() => setAiOpen(true)}
+                className="bg-foreground text-background rounded-lg px-3 py-2 text-xs font-medium flex items-center gap-1.5 hover:opacity-90"
+              >
+                <Zap className="h-3.5 w-3.5" /> Ask Aether
               </button>
             </div>
           </div>
@@ -134,7 +195,10 @@ function Dashboard() {
                 Predicted <span className="font-semibold">14% enrollment surge</span> in Computer Science next semester. I've drafted 3 new sections and identified 7 qualified TAs.
               </div>
             </div>
-            <button className="relative shrink-0 text-xs font-medium px-3 py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] text-foreground transition-colors">
+            <button
+              onClick={() => setAiOpen(true)}
+              className="relative shrink-0 text-xs font-medium px-3 py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] text-foreground transition-colors"
+            >
               Review plan
             </button>
           </motion.div>
@@ -307,8 +371,110 @@ function Dashboard() {
               </div>
             </div>
           </div>
+
+          {/* Tasks + Activity */}
+          <div className="grid lg:grid-cols-3 gap-4">
+            <div className="lg:col-span-2">
+              <TasksWidget />
+            </div>
+            <div className="rounded-2xl glass p-6">
+              <div className="text-sm font-semibold text-foreground mb-4">Activity feed</div>
+              <div className="space-y-4">
+                {[
+                  { who: "Maya O.", what: "approved CS-220 syllabus", when: "2m" },
+                  { who: "Aether AI", what: "rebalanced room assignments", when: "11m" },
+                  { who: "Dr. Chen", what: "submitted faculty report", when: "1h" },
+                  { who: "System", what: "ingested 412 new applications", when: "3h" },
+                ].map((a, i) => (
+                  <div key={i} className="flex gap-3 text-xs">
+                    <div className="h-6 w-6 rounded-full bg-aurora/40 flex items-center justify-center text-[10px] font-semibold text-foreground shrink-0">
+                      {a.who[0]}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-foreground">
+                        <span className="font-semibold">{a.who}</span> {a.what}
+                      </div>
+                      <div className="text-muted-foreground mt-0.5">{a.when} ago</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </main>
+
+      <AIAssistantPanel open={aiOpen} onClose={() => setAiOpen(false)} />
+      <CommandPalette open={searchOpen} query={query} setQuery={setQuery} onClose={() => setSearchOpen(false)} onAskAI={() => { setSearchOpen(false); setAiOpen(true); }} />
+    </div>
+  );
+}
+
+function CommandPalette({
+  open,
+  query,
+  setQuery,
+  onClose,
+  onAskAI,
+}: {
+  open: boolean;
+  query: string;
+  setQuery: (q: string) => void;
+  onClose: () => void;
+  onAskAI: () => void;
+}) {
+  const items = [
+    { label: "View students", group: "Navigate", icon: Users },
+    { label: "Open analytics", group: "Navigate", icon: ChartBar },
+    { label: "Manage schedule", group: "Navigate", icon: Calendar },
+    { label: "Course catalog", group: "Navigate", icon: BookOpen },
+    { label: "Ask Aether AI", group: "Actions", icon: Brain, onSelect: onAskAI },
+    { label: "Invite team member", group: "Actions", icon: Zap },
+    { label: "Account settings", group: "Account", icon: Settings },
+  ];
+  const filtered = items.filter((i) => i.label.toLowerCase().includes(query.toLowerCase()));
+
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-[60] flex items-start justify-center pt-32 px-4 bg-background/60 backdrop-blur-md" onClick={onClose}>
+      <motion.div
+        initial={{ opacity: 0, y: -10, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.18 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-xl glass-strong rounded-2xl shadow-elev overflow-hidden"
+      >
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <input
+            autoFocus
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search students, courses, actions…"
+            className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/60 outline-none"
+          />
+          <kbd className="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.06] border border-white/[0.06] text-muted-foreground">ESC</kbd>
+        </div>
+        <div className="max-h-80 overflow-auto p-2">
+          {filtered.length === 0 && (
+            <div className="px-3 py-10 text-center text-xs text-muted-foreground">No matches for "{query}"</div>
+          )}
+          {filtered.map((i) => (
+            <button
+              key={i.label}
+              onClick={() => {
+                if (i.onSelect) i.onSelect();
+                else onClose();
+              }}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/[0.06] text-left transition-colors"
+            >
+              <i.icon className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} />
+              <span className="text-sm text-foreground flex-1">{i.label}</span>
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{i.group}</span>
+            </button>
+          ))}
+        </div>
+      </motion.div>
     </div>
   );
 }

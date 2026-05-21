@@ -38,16 +38,22 @@ export function Navbar() {
               {item.label}
             </a>
           ))}
+          <Link
+            to="/contact"
+            className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-lg hover:bg-white/[0.04] transition-colors"
+          >
+            Contact
+          </Link>
         </nav>
         <div className="flex items-center gap-2">
-          <a href="#" className="hidden sm:block text-sm text-muted-foreground hover:text-foreground px-3 py-1.5 transition-colors">
+          <Link to="/login" className="hidden sm:block text-sm text-muted-foreground hover:text-foreground px-3 py-1.5 transition-colors">
             Sign in
-          </a>
+          </Link>
           <Link
-            to="/dashboard"
+            to="/signup"
             className="text-sm font-medium px-4 py-2 rounded-xl bg-foreground text-background hover:opacity-90 transition-opacity"
           >
-            Launch app
+            Get started
           </Link>
         </div>
       </div>

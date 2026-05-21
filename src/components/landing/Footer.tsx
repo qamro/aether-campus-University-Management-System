@@ -1,10 +1,11 @@
 import { Sparkles } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 const cols = [
   { title: "Product", links: ["Platform", "AI", "Dashboard", "Integrations", "Changelog"] },
   { title: "Solutions", links: ["Universities", "Colleges", "Systems", "Government", "Research"] },
   { title: "Resources", links: ["Documentation", "Guides", "Case studies", "API", "Status"] },
-  { title: "Company", links: ["About", "Careers", "Press", "Contact", "Security"] },
+  { title: "Company", links: ["About", "Careers", "Press", "Security"] },
 ];
 
 export function Footer() {
@@ -53,8 +54,19 @@ export function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row gap-4 justify-between text-xs text-muted-foreground">
-          <div>© {new Date().getFullYear()} AetherCampus, Inc. All rights reserved.</div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+            <span>© {new Date().getFullYear()} AetherCampus, Inc. All rights reserved.</span>
+            <span className="hidden sm:inline text-muted-foreground/40">·</span>
+            <span className="inline-flex items-center gap-1.5">
+              <Sparkles className="h-3 w-3 text-cyan animate-pulse-glow" />
+              <span className="text-muted-foreground/80">
+                Developed by{" "}
+                <span className="text-gradient font-medium tracking-tight">Mohamed Qamar Eddine Bakhouche</span>
+              </span>
+            </span>
+          </div>
           <div className="flex gap-6">
+            <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
             <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
             <a href="#" className="hover:text-foreground transition-colors">Terms</a>
             <a href="#" className="hover:text-foreground transition-colors">SOC 2</a>
