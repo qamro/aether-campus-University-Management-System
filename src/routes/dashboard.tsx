@@ -12,6 +12,9 @@ import { useDashboard } from "@/lib/dashboard/store";
 import { NotificationsButton } from "@/components/dashboard/NotificationsButton";
 import { TasksWidget } from "@/components/dashboard/TasksWidget";
 import { AIAssistantPanel } from "@/components/dashboard/AIAssistantPanel";
+import { CoursesPanel } from "@/components/dashboard/sections/CoursesPanel";
+import { StudentsPanel, FacultyPanel, SchedulePanel, AnalyticsPanel, MessagesPanel, AetherAIPanel } from "@/components/dashboard/sections/OtherPanels";
+import type { Section } from "@/lib/dashboard/store";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -23,8 +26,8 @@ export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
-const nav = [
-  { icon: Home, label: "Overview", active: true },
+const nav: { icon: typeof Home; label: Section }[] = [
+  { icon: Home, label: "Overview" },
   { icon: Users, label: "Students" },
   { icon: GraduationCap, label: "Faculty" },
   { icon: Calendar, label: "Schedule" },
@@ -53,6 +56,8 @@ function Dashboard() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const pushNotification = useDashboard((s) => s.pushNotification);
+  const activeSection = useDashboard((s) => s.activeSection);
+  const setSection = useDashboard((s) => s.setSection);
 
   const initials = useMemo(() => {
     const name = user?.name ?? "Helena Voss";
@@ -117,8 +122,9 @@ function Dashboard() {
           {nav.map((item) => (
             <button
               key={item.label}
+              onClick={() => setSection(item.label)}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-                item.active ? "bg-white/[0.06] text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
+                activeSection === item.label ? "bg-white/[0.06] text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
               }`}
             >
               <item.icon className="h-4 w-4" strokeWidth={1.75} />
@@ -177,6 +183,18 @@ function Dashboard() {
         </header>
 
         <div className="p-6 lg:p-10 space-y-6 max-w-[1600px]">
+          {activeSection !== "Overview" ? (
+            <>
+              {activeSection === "Students" && <StudentsPanel />}
+              {activeSection === "Faculty" && <FacultyPanel />}
+              {activeSection === "Schedule" && <SchedulePanel />}
+              {activeSection === "Courses" && <CoursesPanel />}
+              {activeSection === "Analytics" && <AnalyticsPanel />}
+              {activeSection === "Aether AI" && <AetherAIPanel />}
+              {activeSection === "Messages" && <MessagesPanel />}
+            </>
+          ) : (
+          <>
           {/* AI insight banner */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -401,11 +419,13 @@ function Dashboard() {
               </div>
             </div>
           </div>
+          </>
+          )}
         </div>
       </main>
 
       <AIAssistantPanel open={aiOpen} onClose={() => setAiOpen(false)} />
-      <CommandPalette open={searchOpen} query={query} setQuery={setQuery} onClose={() => setSearchOpen(false)} onAskAI={() => { setSearchOpen(false); setAiOpen(true); }} />
+      <CommandPalette open={searchOpen} query={query} setQuery={setQuery} onClose={() => setSearchOpen(false)} onAskAI={() => { setSearchOpen(false); setAiOpen(true); }} onGoto={(s) => { setSection(s); setSearchOpen(false); }} />
     </div>
   );
 }
@@ -416,19 +436,24 @@ function CommandPalette({
   setQuery,
   onClose,
   onAskAI,
+  onGoto,
 }: {
   open: boolean;
   query: string;
   setQuery: (q: string) => void;
   onClose: () => void;
   onAskAI: () => void;
+  onGoto: (s: Section) => void;
 }) {
-  const items = [
-    { label: "View students", group: "Navigate", icon: Users },
-    { label: "Open analytics", group: "Navigate", icon: ChartBar },
-    { label: "Manage schedule", group: "Navigate", icon: Calendar },
-    { label: "Course catalog", group: "Navigate", icon: BookOpen },
+  const items: { label: string; group: string; icon: typeof Users; onSelect?: () => void }[] = [
+    { label: "View students", group: "Navigate", icon: Users, onSelect: () => onGoto("Students") },
+    { label: "Open analytics", group: "Navigate", icon: ChartBar, onSelect: () => onGoto("Analytics") },
+    { label: "Manage schedule", group: "Navigate", icon: Calendar, onSelect: () => onGoto("Schedule") },
+    { label: "Course catalog", group: "Navigate", icon: BookOpen, onSelect: () => onGoto("Courses") },
+    { label: "Faculty directory", group: "Navigate", icon: GraduationCap, onSelect: () => onGoto("Faculty") },
+    { label: "Messages inbox", group: "Navigate", icon: MessageSquare, onSelect: () => onGoto("Messages") },
     { label: "Ask Aether AI", group: "Actions", icon: Brain, onSelect: onAskAI },
+    { label: "Open Aether console", group: "Actions", icon: Brain, onSelect: () => onGoto("Aether AI") },
     { label: "Invite team member", group: "Actions", icon: Zap },
     { label: "Account settings", group: "Account", icon: Settings },
   ];
