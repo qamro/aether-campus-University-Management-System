@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDashboard } from "./store";
 import { coursesApi, facultyApi, messagesApi, scheduleApi, studentsApi } from "@/lib/mock-api";
 
@@ -68,8 +68,8 @@ export function useThreadsData() {
 }
 
 export function useDebounced<T>(value: T, ms = 250): T {
-  const [v, setV] = (require("react") as typeof import("react")).useState(value);
-  (require("react") as typeof import("react")).useEffect(() => {
+  const [v, setV] = useState(value);
+  useEffect(() => {
     const id = setTimeout(() => setV(value), ms);
     return () => clearTimeout(id);
   }, [value, ms]);
