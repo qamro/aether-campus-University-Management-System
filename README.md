@@ -95,7 +95,10 @@ Built with a **world-class design system**, it focuses on:
 ## 🏗️ Architecture
 
 
+
+
 src/
+
 ├── app/
 ├── components/
 │ ├── ui/
@@ -106,11 +109,13 @@ src/
 │ ├── analytics/
 │ └── shared/
 ├── store/
-├── hooks/
+├── hooks/ 
 ├── services/
 ├── lib/
 ├── utils/
 └── types/
+
+
 
 
 ---
