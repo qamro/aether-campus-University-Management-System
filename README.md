@@ -174,9 +174,9 @@ Developed by:
 
 ## 🔥 Vision
 
-AetherCampus aims to simulate:
+AetherCampus is built with the ambition of becoming a next-generation AI-powered university operating system designed by and for highly motivated, talented students who aim to build real-world, production-grade systems.
 
-> “A billion-dollar AI-powered university operating system of the future.”
+It represents a commitment to excellence in modern software engineering, UI/UX design, and AI-driven product thinking.
 
 Inspired by:
 Stripe · Linear · Vercel · Notion · Apple · OpenAI
