@@ -2,10 +2,10 @@
 
 # 🚀 AetherCampus
 
-🌐 **Live Demo:** https://aether-campus.qamrodz.workers.dev  
+🌐 **Live Demo:** (https://aether-campus.qamrodz.workers.dev)  
 
 
-📦 **GitHub Repo:** https://github.com/qamro/aether-campus-University-Management-System
+📦 **GitHub Repo:** (https://github.com/qamro/aether-campus-University-Management-System)
 
 ---
 
