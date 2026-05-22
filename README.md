@@ -100,19 +100,33 @@ Built with a **world-class design system**, it focuses on:
 src/
 
 ├── app/
+
 ├── components/
+
 │ ├── ui/
+
 │ ├── dashboard/
+
 │ ├── landing/
+
 │ ├── ai/
+
 │ ├── auth/
+
 │ ├── analytics/
+
 │ └── shared/
+
 ├── store/
+
 ├── hooks/ 
+
 ├── services/
+
 ├── lib/
+
 ├── utils/
+
 └── types/
 
 
