@@ -6,7 +6,7 @@ import { SectionHeader } from "./Features";
 const faqs = [
   { q: "How long does deployment take?", a: "Most institutions go live in 4–8 weeks. Multi-campus systems typically complete rollout in a single quarter with our success engineering team." },
   { q: "Where does Aether Intelligence run?", a: "Our models run on globally distributed inference infrastructure with regional pinning. You choose where data resides, including private/on-prem options." },
-  { q: "Is AetherCampus FERPA compliant?", a: "Yes — FERPA, GDPR, SOC 2 Type II, and ISO 27001. Granular role-based access, full audit logs, and customer-managed encryption keys are standard." },
+  { q: "Is AetherCampus FERPA compliant?", a: "Yes, FERPA, GDPR, SOC 2 Type II, and ISO 27001. Granular role-based access, full audit logs, and customer-managed encryption keys are standard." },
   { q: "Can we integrate existing systems?", a: "Aether ships with first-class integrations for Banner, PeopleSoft, Workday, Canvas, Moodle, and Microsoft / Google Workspace. Open APIs and webhooks for the rest." },
   { q: "What does support look like?", a: "Every customer gets a named success engineer. Enterprise tiers include 24/7 response with strict SLAs and embedded onboarding." },
 ];

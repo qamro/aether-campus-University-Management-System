@@ -73,10 +73,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AetherCampus — The AI Operating System for Universities" },
+      { title: "AetherCampus" },
       { name: "description", content: "AetherCampus is the AI-native operating system reshaping how universities run — intelligent scheduling, predictive analytics, and a cinematic campus experience." },
       { name: "author", content: "AetherCampus" },
-      { property: "og:title", content: "AetherCampus — The AI Operating System for Universities" },
+      { property: "og:title", content: "AetherCampus" },
       { property: "og:description", content: "AI-native university management. Built for the next century of higher education." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -86,6 +86,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon.png",
       },
       {
         rel: "preconnect",

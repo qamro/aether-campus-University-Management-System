@@ -30,7 +30,7 @@ export function Hero() {
             <span className="absolute inset-0 rounded-full bg-cyan animate-ping opacity-75" />
             <span className="relative h-2 w-2 rounded-full bg-cyan" />
           </span>
-          Introducing Aether OS 2.0 — now in private beta
+          Introducing Aether OS 2.0 - now in private beta
           <ArrowRight className="h-3 w-3" />
         </motion.div>
 

@@ -15,7 +15,7 @@ const features = [
   { icon: Calendar, title: "Autonomous scheduling", desc: "Conflict-free timetables generated in seconds across thousands of constraints." },
   { icon: ChartBar, title: "Real-time analytics", desc: "Live dashboards across every campus, faculty, and learning outcome." },
   { icon: MessageSquare, title: "AI assistant", desc: "Conversational copilot for students, faculty, and administrators." },
-  { icon: Workflow, title: "Unified workflows", desc: "Admissions, grading, attendance, and finance — one composable surface." },
+  { icon: Workflow, title: "Unified workflows", desc: "Admissions, grading, attendance, and finance, one composable surface." },
   { icon: Users, title: "Student success", desc: "Detect at-risk students early and intervene with personalised guidance." },
   { icon: ShieldCheck, title: "Enterprise security", desc: "SOC 2, FERPA, GDPR. SSO, audit logs, and granular role policies." },
   { icon: Zap, title: "Built for scale", desc: "Edge-rendered. Globally distributed. Designed for millions of records." },

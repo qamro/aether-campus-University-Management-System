@@ -81,7 +81,7 @@ export function AIShowcase() {
           {/* capability list */}
           <div className="space-y-4">
             <div className="text-sm text-muted-foreground leading-relaxed">
-              Aether Intelligence runs continuously across your institution — ingesting attendance, performance, schedules, and behaviour to deliver decisions before you ask.
+              Aether Intelligence runs continuously across your institution, ingesting attendance, performance, schedules, and behaviour to deliver decisions before you ask.
             </div>
             {capabilities.map((c, i) => (
               <motion.div
