@@ -29,8 +29,8 @@ export const Route = createFileRoute("/contact")({
 const contactInfo = [
   { icon: Mail, label: "Email", value: "hello@aethercampus.ai", href: "mailto:hello@aethercampus.ai" },
   { icon: Phone, label: "Phone", value: "+1 (415) 555-0142", href: "tel:+14155550142" },
-  { icon: MapPin, label: "HQ", value: "548 Market St, San Francisco · Zurich · Singapore" },
-  { icon: Clock, label: "Office hours", value: "Mon–Fri, 09:00 – 18:00 (PT / CET / SGT)" },
+  { icon: MapPin, label: "HQ", value: "Sétif, Algeria" },
+  { icon: Clock, label: "Office hours", value: "Sun–Thu, 09:00 – 18:00 (PT / CET / SGT)" },
 ];
 
 const faqs = [
@@ -273,9 +273,9 @@ function FuturisticMap() {
             <line key={`v${i}`} x1={i * 16} x2={i * 16} y1="0" y2="180" stroke="oklch(0.97 0.005 260 / 0.05)" />
           ))}
           {[
-            { x: 80, y: 80, label: "SF" },
-            { x: 200, y: 65, label: "Zurich" },
-            { x: 310, y: 110, label: "Singapore" },
+            { x: 80, y: 80, label: "Algiers" },
+            { x: 200, y: 65, label: "Béjaia" },
+            { x: 310, y: 110, label: "Sétif" },
           ].map((p) => (
             <g key={p.label}>
               <circle cx={p.x} cy={p.y} r="22" fill="url(#mg)" />

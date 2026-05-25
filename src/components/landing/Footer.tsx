@@ -24,7 +24,7 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-4 text-sm text-muted-foreground max-w-xs leading-relaxed">
-              The AI operating system for the modern university. Built with care in Zurich, Singapore, and San Francisco.
+              The AI operating system for the modern university. Built with care in Sétif, Algeria.
             </p>
             <form className="mt-6 flex glass rounded-xl p-1 max-w-sm">
               <input
