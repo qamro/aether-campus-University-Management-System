@@ -28,8 +28,8 @@ export const Route = createFileRoute("/contact")({
 
 const contactInfo = [
   { icon: Mail, label: "Email", value: "hello@aethercampus.ai", href: "mailto:hello@aethercampus.ai" },
-  { icon: Phone, label: "Phone", value: "+1 (415) 555-0142", href: "tel:+14155550142" },
-  { icon: MapPin, label: "HQ", value: "Sétif, Algeria" },
+  { icon: Phone, label: "Phone", value: "+213 555 50 61 42", href: "tel:+213 555 50 61 42" },
+  { icon: MapPin, label: "HQ", value: "Sétif · Béjaia · Algiers, Algeria" },
   { icon: Clock, label: "Office hours", value: "Sun–Thu, 09:00 – 18:00 (PT / CET / SGT)" },
 ];
 
