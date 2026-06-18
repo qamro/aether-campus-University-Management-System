@@ -28,7 +28,7 @@ export const Route = createFileRoute("/contact")({
 
 const contactInfo = [
   { icon: Mail, label: "Email", value: "qamrodz@gmail.com", href: "mailto:qamrodz@gmail.com" },
-  { icon: Phone, label: "Phone", value: "+213 555 50 61 42", href: "tel:+213 555 50 61 42" },
+  { icon: Phone, label: "Phone", value: "+213 550 44 41 08", href: "tel:+213 550 44 41 08" },
   { icon: MapPin, label: "HQ", value: "Sétif · Béjaia · Algiers, Algeria" },
   { icon: Clock, label: "Office hours", value: "Sun–Thu, 09:00 – 18:00 (PT / CET / SGT)" },
 ];
