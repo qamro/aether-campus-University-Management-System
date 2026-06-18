@@ -53,7 +53,7 @@ const socials: { label: string; href: string; path: string }[] = [
   },
   {
     label: "Twitter / X",
-    href: "#",
+    href: "https://x.com/qamroBKC",
     path: "M18.244 2H21.5l-7.5 8.57L23 22h-6.75l-5.28-6.42L4.92 22H1.66l8.02-9.16L1 2h6.91l4.77 5.86L18.24 2Zm-1.18 18h1.87L7.04 4H5.05l12.01 16Z",
   },
 ];
