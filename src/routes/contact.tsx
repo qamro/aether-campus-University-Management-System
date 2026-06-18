@@ -27,7 +27,7 @@ export const Route = createFileRoute("/contact")({
 });
 
 const contactInfo = [
-  { icon: Mail, label: "Email", value: "hello@aethercampus.ai", href: "mailto:hello@aethercampus.ai" },
+  { icon: Mail, label: "Email", value: "qamrodz@gmail.com", href: "mailto:qamrodz@gmail.com" },
   { icon: Phone, label: "Phone", value: "+213 555 50 61 42", href: "tel:+213 555 50 61 42" },
   { icon: MapPin, label: "HQ", value: "Sétif · Béjaia · Algiers, Algeria" },
   { icon: Clock, label: "Office hours", value: "Sun–Thu, 09:00 – 18:00 (PT / CET / SGT)" },
