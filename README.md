@@ -138,10 +138,10 @@ src/
 
 This project is currently deployed on:
 
-☁️ **Cloudflare Pages**
+☁️ **Cloudflare Workers**
 
 ### Deployment Flow:
-GitHub → Cloudflare Pages → Live Production Site
+GitHub → Cloudflare Workers → Live Production Site
 
 ---
 
