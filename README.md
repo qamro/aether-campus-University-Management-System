@@ -1,4 +1,4 @@
-#University Management System "Aether Campus"
+
 
 # 🚀 AetherCampus
 
